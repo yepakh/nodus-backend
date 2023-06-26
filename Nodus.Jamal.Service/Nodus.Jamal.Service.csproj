@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>c6621c6f-d658-43a6-8144-360de390a16a</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Protos\jamal.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="..\Nodus.Database.Migrations.gRPC\Protos\migrator.proto" GrpcServices="Client">
+      <Link>Protos\migrator.proto</Link>
+    </Protobuf>
+    <Protobuf Include="..\Nodus.NotificaitonService\Protos\notification.proto" GrpcServices="Client">
+      <Link>Protos\notification.proto</Link>
+    </Protobuf>
+    <Protobuf Include="Protos\jamal.proto" GrpcServices="Server" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.49.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
+    <PackageReference Include="Sentry.AspNetCore" Version="3.33.0" />
+    <PackageReference Include="Sentry.AspNetCore.Grpc" Version="3.33.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nodus.Database.Context\Nodus.Database.Context.csproj" />
+    <ProjectReference Include="..\Nodus.gRPC.ExceptionHandler\Nodus.gRPC.ExceptionHandler.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.Development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

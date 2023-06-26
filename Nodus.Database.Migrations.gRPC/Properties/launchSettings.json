@@ -1,0 +1,19 @@
+{
+  "profiles": {
+    "Nodus.Database.Migrations.gRPC": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:5262;https://localhost:7262"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "publishAllPorts": true,
+      "useSSL": false,
+      "httpPort": 5001
+    }
+  }
+}

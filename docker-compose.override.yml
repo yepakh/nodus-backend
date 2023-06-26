@@ -1,0 +1,86 @@
+version: '3.4'
+
+services:
+  nodus.api:
+    container_name: nodus.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development_Docker
+    ports:
+      - "3000:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  nodus.jamal.service:
+    container_name: nodus.jamal.service
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development_Docker
+    ports:
+      - "3001:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  nodus.auth:
+    container_name: nodus.auth
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "3002:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  nodus.sqlserver:
+    container_name: nodus.sqlserver
+    environment:
+        SA_PASSWORD: "Qwerty1!"
+        ACCEPT_EULA: "Y"
+    restart: always
+    ports:
+        - "1433:1433"
+
+  nodus.database.migrations.webapi:
+    container_name: nodus.database.migrations.webapi
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5001:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  nodus.database.migrations.grpc:
+    container_name: nodus.database.migrations.grpc
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "5002:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  nodus.notificationservice:
+    container_name: nodus.notificationservice
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=;http://+:80
+    ports:
+      - "3003:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+  
+  nodus.tgbot:
+    container_name: nodus.tgbot
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development_Docker
+      - BOTOPTIONS_ADMINDBCONNECTIONSTRING=Data Source=nodus.sqlserver;Initial Catalog=AdminDB;User ID=sa;Password=Qwerty1!
+    ports:
+      - "4000:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    

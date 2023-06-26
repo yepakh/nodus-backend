@@ -1,0 +1,640 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "Nodus.Jamal.Service.Protos";
+
+package jam;
+
+service Jam {
+    //Company
+    rpc GetCompanies (GetCompaniesRequest) returns (GetCompaniesResponse);
+    rpc GetCompanyById (GetCompanyByIdRequest) returns (GetCompanyByIdResponse);
+    rpc CreateCompany (CreateCompanyRequest) returns (CreateCompanyResponse);
+    rpc DeleteCompany (DeleteCompanyRequest) returns (Empty);
+
+    //User
+    rpc GetAllCompanyAdmins (GetAllCompanyAdminsRequest) returns (GetAllCompanyAdminsResponse);
+    rpc GetUser (GetUserRequest) returns (GetUserResponse);
+    rpc GetUserByEmail (GetUserByEmailRequest) returns (GetUserResponse);
+    rpc GetAllCompanyUsers (GetAllCompanyUsersRequest) returns (GetAllCompanyUsersResponse);
+    rpc CreateUser (CreateUserRequest) returns (CreateUserResponse);
+    rpc UpdateUser (UpdateUserRequest) returns (Empty);
+    rpc DisableUser (DisableUserRequest) returns (Empty);
+    rpc SendForgotPasswordEmail (GetUserByEmailRequest) returns (IsEmailSentResponse);
+
+    //Role
+    rpc GetRole (GetRoleRequest) returns (GetRoleResponse);
+    rpc GetRoles (GetRolesRequest) returns (GetRolesResponse);
+    rpc CreateRole (CreateRoleRequest) returns (CreateRoleResponse);
+    rpc UpdateRole (UpdateRoleRequest) returns (Empty);
+    rpc DeleteRole (DeleteRoleRequest) returns (Empty);
+
+    //Feature
+    rpc GetFeatures (Empty) returns (GetFeaturesResponse);
+
+    //Trip
+    rpc GetTrip (GetTripRequest) returns (GetTripResponse);
+    rpc GetUserTrips (GetUserTripsRequest) returns (GetUserTripsResponse);
+    rpc GetTripUsers (GetTripUsersRequest) returns (GetTripUsersResponse);
+    rpc CreateTrip (CreateTripRequest) returns (CreateTripResponse);
+    rpc UpdateTripData (UpdateTripDataRequest) returns (Empty);
+    rpc ChangeTripStatus (ChangeTripStatusRequest) returns (Empty);
+    rpc UpdateTripUsers (UpdateTripUsersRequest) returns (Empty);
+    rpc DeleteTrip (DeleteTripRequest) returns (Empty);
+
+    //BillCategory
+    rpc GetBillCategory (GetBillCategoryRequest) returns (GetBillCategoryResponse);
+    rpc GetBillCategories (GetBillCategoriesRequest) returns (GetBillCategoriesResponse);
+    rpc CreateBillCategory (CreateBillCategoryRequest) returns (CreateBillCategoryResponse);
+    rpc UpdateBillCategory (UpdateBillCategoryRequest) returns (Empty);
+    rpc DeleteBillCategory (DeleteBillCategoryRequest) returns (Empty);
+    rpc GetBillCategoryInfo (GetBillCategoryRequest) returns (BillCategoryInfoResponse);
+
+    //File
+    rpc GetFilePath (GetFilePathRequest) returns (GetFilePathResponse);
+
+    //Single trip statistics
+    rpc GetTripStatisticsByCategory (GetTripStatisticsRequest) returns (GetTripStatisticsByCategoryResponse);
+    rpc GetTripStatisticsByUser (GetTripStatisticsRequest) returns (GetTripStatisticsByUserResponse);
+    rpc GetTripStatisticsTotalBills (GetTripStatisticsTotalBillsRequest) returns (GetTripStatisticsTotalBillsResponse);
+
+    //Total statistics
+    rpc GetTotalStatisticsInfo (TotalStatisticsFilterRequest) returns (TotalStatisticsInfoResponse);
+    rpc GetTotalExpensesByCategories (TotalStatisticsFilterRequest) returns (GetTripStatisticsByCategoryResponse);
+    rpc GetTotalExpensesByUsers (TotalStatisticsFilterRequest) returns (GetTripStatisticsByUserResponse);
+    rpc GetTotalExpensesByTrips (TotalStatisticsFilterRequest) returns (GetTotalExpensesByTripsResponse);
+
+    //Bill
+    rpc GetBill (GetBillRequest) returns (GetBillResponse);
+    rpc GetUserBills (GetUserBillsRequest) returns (GetUserBillsResponse);
+    rpc GetTripBills (GetTripBillsRequest) returns (GetTripBillsResponse);
+    rpc CreateBill (CreateBillRequest) returns (CreateBillResponse);
+    rpc UpdateBill (UpdateBillRequest) returns (Empty);
+    rpc DeleteBill (DeleteBillRequest) returns (Empty);
+}
+
+//Bill
+
+enum BillStatus{
+    New = 0;
+    Approved = 1;
+    Rejected = 2;
+}
+
+message Bill{
+    int32 Id = 1;
+    string Name = 2;
+    string Description = 3;
+    double Sumary = 4;
+    google.protobuf.Timestamp DateTimeCreated = 5;
+    google.protobuf.Timestamp DateTimeEdited = 6;
+    string CreatedById = 7;
+    string CreatedByName = 8;
+    string EditedById = 9;
+    string EditedByName = 10;
+    int32 TripId = 11;
+    BillStatus Status = 12;
+    int32 CategoryId = 13;
+    string CategoryName = 14;
+    repeated string DocumentsIds = 15;
+    repeated string DocumentsUrls = 16;
+}
+
+message GetBillRequest{
+    int32 CompanyId = 1;
+    int32 BillId = 2;
+}
+
+message GetBillResponse{
+    Bill Bill = 1;
+}
+
+message GetUserBillsRequest{
+    PaginationRequest Pagination = 1;
+    string UserId = 2;
+    int32 CompanyId = 3;
+    int32 TripId = 4;
+}
+
+message GetUserBillsResponse{
+    PaginationResponse Pagination = 1;
+    repeated Bill Bills = 2;
+}
+
+message GetTripBillsRequest{
+    PaginationRequest Pagination = 1;
+    int32 TripId = 2;
+    int32 CompanyId = 3;
+}
+
+message GetTripBillsResponse{
+    PaginationResponse Pagination = 1;
+    repeated Bill Bills = 2;
+}
+
+message CreateBillRequest{
+    string Name = 1;
+    string Description = 2;
+    double Sumary = 3;
+    string CreatedById = 4;
+    int32 TripId = 5;
+    int32 CategoryId = 6;
+    repeated string DocumentsUrls = 7;
+    int32 CompanyId = 8;
+}
+
+message CreateBillResponse{
+    int32 BillId = 1;
+}
+
+message UpdateBillRequest{
+    string Name = 1;
+    string Description = 2;
+    double Sumary = 3;
+    string UpdatedById = 4;
+    int32 TripId = 5;
+    int32 CategoryId = 6;
+    int32 BillId = 7;
+    repeated string DocumentsUrls = 8;
+    int32 CompanyId = 9;
+}
+
+message DeleteBillRequest{
+    int32 BillId = 1;
+    int32 CompanyId = 2;
+}
+
+//BillCategory
+
+message BillCategory{
+    int32 Id = 1;
+    string Name = 2;
+    string Description = 3;
+    bool IsIncludedInDailyAllowance = 4;
+}
+
+message GetBillCategoryRequest{
+    int32 CompanyId = 1;
+    int32 BillCategoryId = 2;
+}
+
+message GetBillCategoryResponse{
+    BillCategory BillCategory = 1;
+}
+
+message GetBillCategoriesRequest{
+    PaginationRequest Pagination = 1;
+    int32 CompanyId = 2;
+}
+
+message GetBillCategoriesResponse{
+    PaginationResponse Pagination = 1;
+    repeated BillCategory BillCategories = 2;
+}
+
+message CreateBillCategoryRequest{
+    int32 CompanyId = 1;
+    string Name = 2;
+    string Description = 3;
+    bool IsIncludedInDailyAllowance = 4;
+}
+
+message CreateBillCategoryResponse{
+    int32 BillCategoryId = 1;
+}
+
+message UpdateBillCategoryRequest{
+    int32 CompanyId = 1;
+    int32 BillCategoryId = 2;
+    string Name = 3;
+    string Description = 4;
+    bool IsIncludedInDailyAllowance = 5;
+}
+
+message DeleteBillCategoryRequest{
+    int32 CompanyId = 1;
+    int32 BillCategoryId = 2;
+}
+
+message BillCategoryInfoResponse{
+    repeated BillUsageInTripInfo Trips = 1;
+    int32 TotalBills = 2;
+    double TotalSpendings = 3;
+}
+
+message BillUsageInTripInfo{
+    int32 TripId = 1;
+    string TripName = 2;
+    int32 BillsInCategory = 3;
+    double SumOfBillsInCategory = 4;
+}
+//Trip
+message GetTripRequest {
+    int32 TripId = 1;
+    int32 CompanyId = 2;
+}
+
+message GetTripResponse {
+    Trip Trip = 1;
+}
+
+message GetUserTripsRequest {
+    PaginationRequest Pagination = 1;
+    string UserId = 2;
+    int32 CompanyId = 3;
+    TripRole TripRole = 4;
+    string TripStatus = 5;
+}
+
+message GetUserTripsResponse {
+    PaginationResponse Pagination = 1;
+    repeated Trip Trips = 2;
+}
+
+message GetTripUsersRequest {
+    PaginationRequest Pagination = 1;
+    int32 TripId = 2;
+    int32 CompanyId = 3;
+}
+
+message GetTripUsersResponse {
+    PaginationResponse Pagination = 1;
+    repeated TripUser Users = 2;
+}
+
+message CreateTripRequest {
+    repeated TripUserRequest Users = 1;
+    string Name = 2;
+    string Description = 3;
+    double Budget = 5;
+    string CreatedById = 6;
+    google.protobuf.Timestamp DateTimeStart = 8;
+    google.protobuf.Timestamp DateTimeEnd = 9;
+    int32 CompanyId = 10;
+}
+
+message CreateTripResponse {
+    int32 TripId = 1;
+}
+
+message UpdateTripDataRequest {
+    int32 TripId = 1;
+    string Name = 2;
+    string Description = 3;
+    double Budget = 5;
+    google.protobuf.Timestamp DateTimeStart = 8;
+    google.protobuf.Timestamp DateTimeEnd = 9;
+    int32 CompanyId = 10;
+}
+
+message ChangeTripStatusRequest{
+    int32 StatusId = 1;
+    int32 TripId = 2;
+    int32 CompanyId = 3;
+}
+
+message UpdateTripUsersRequest{
+    repeated TripUserRequest Users = 1;
+    int32 CompanyId = 2;
+    int32 TripId = 3;
+}
+
+message DeleteTripRequest{
+    int32 TripId = 1;
+    int32 CompanyId = 2;
+}
+
+message Trip {
+    int32 Id = 1;
+    string Name = 2;
+    string Description = 3;
+    double Budget = 5;
+    ExtendedUserData CreatedBy = 6;
+    google.protobuf.Timestamp DateTimeCreated = 7;
+    google.protobuf.Timestamp DateTimeStart = 8;
+    google.protobuf.Timestamp DateTimeEnd = 9;
+    string TripStatus = 10;
+
+}
+
+message TripUser{
+    string Id = 1;
+    string FirstName = 2;
+    string LastName = 3;
+    string Email = 4;
+    Role Role = 5;
+    string Address = 6;
+    string Notes = 7;
+    bool IsActive = 8;
+    string PhoneNumber = 9;
+    bool IsParticipant = 10;
+    double Budget = 11;
+}
+
+message TripUserRequest{
+    string UserId = 1;
+    bool CanUploadBills = 2;
+    double Budget = 3;
+}
+
+enum TripRole {
+    All = 0;
+    Owner = 1;
+    Participant = 2;
+    NonParticipant = 3;
+}
+
+//Common
+
+message Empty {
+}
+
+message PaginationRequest{
+    int32 Limit = 1;
+    int32 Offset = 2;
+}
+
+message PaginationResponse{
+    int32 TotalCount = 2;
+}
+
+//Company
+
+message GetCompaniesRequest{
+    PaginationRequest Pagination = 1;
+}
+
+message GetCompaniesResponse{
+    PaginationResponse Pagination = 1;
+    repeated CompanyData Companies = 2;
+}
+
+message GetCompanyByIdRequest{
+    int32 CompanyId = 1;
+}
+
+message GetCompanyByIdResponse{
+    CompanyData Company = 1;
+}
+
+message CreateCompanyRequest {
+    string CompanyName = 1;
+    string CompanyDescription = 2;
+    string AdminFirstName = 3;
+    string AdminLastName = 4;
+    string AdminEmail = 5;
+    string AdminPhoneNumber = 6;
+    string ConnectionString = 7;
+}
+
+message CreateCompanyResponse {
+    int32 CompanyId = 1;
+}
+
+message DeleteCompanyRequest {
+    int32 CompanyId = 1;
+}
+
+message CompanyData{
+    int32 Id = 1;
+    string Name = 2;
+    string Description = 3;
+    int32 TotalAdminsCount = 4;
+}
+
+// Role
+
+message GetRoleRequest{
+    int32 RoleId = 1;
+}
+
+message GetRoleResponse{
+    Role Role = 1;
+}
+
+message GetRolesRequest{
+    PaginationRequest pagination = 1;
+    int32 companyId = 2;
+}
+
+message GetRolesResponse{
+    PaginationResponse Pagination = 1;
+    repeated Role Roles = 2;
+}
+
+message Role {
+    int32 Id = 1;
+    string Name = 2;
+    string Description = 3;
+    repeated Feature Features = 4;
+}
+
+message CreateRoleRequest{
+    string Name = 1;
+    string Description = 2;
+    int32 CompanyId = 3;
+    repeated int32 AvaliableFeaturesIds = 4;
+}
+
+message CreateRoleResponse{
+    int32 RoleId = 1;
+}
+
+message UpdateRoleRequest{
+    int32 Id = 1;
+    string Name = 2;
+    string Description = 3;
+    repeated int32 AvaliableFeaturesIds = 4;
+}
+
+message DeleteRoleRequest{
+    int32 Id = 1;
+}
+
+//User
+
+message GetAllCompanyAdminsRequest{
+    PaginationRequest Pagination = 1;
+    int32 CompanyId = 2;
+}
+
+message GetAllCompanyAdminsResponse{
+    PaginationResponse Pagination = 1;
+    repeated UserData CompanyAdmins = 2;
+}
+
+message UserData{
+    string Id = 1;
+    string FirstName = 2;
+    string LastName = 3;
+    string Email = 4;
+    string RoleName = 5;
+}
+
+message ExtendedUserData{
+    string Id = 1;
+    string FirstName = 2;
+    string LastName = 3;
+    string Email = 4;
+    Role Role = 5;
+    string Address = 6;
+    string Notes = 7;
+    bool IsActive = 8;
+    string PhoneNumber = 9;
+}
+
+message GetUserRequest{
+    string UserId = 1;
+}
+
+message GetUserByEmailRequest{
+    string Email = 1;
+}
+
+message GetUserResponse{
+    ExtendedUserData User = 1;
+}
+
+message GetAllCompanyUsersRequest{
+    PaginationRequest Pagination = 1;
+    int32 CompanyId = 2;
+}
+
+message GetAllCompanyUsersResponse{
+    PaginationResponse Pagination = 1;
+    repeated ExtendedUserData Users = 2;
+}
+
+message CreateUserRequest{
+    string FirstName = 1;
+    string LastName = 2;
+    string Email = 3;
+    string PhoneNumber = 4;
+    string Address = 5;
+    string Notes = 6;
+    int32 RoleId = 7;
+    int32 CompanyId = 8;
+}
+
+message CreateUserResponse{
+    string UserId = 1;
+}
+
+message UpdateUserRequest{
+    string FirstName = 1;
+    string LastName = 2;
+    string Email = 3;
+    string PhoneNumber = 4;
+    string Address = 5;
+    string Notes = 6;
+    int32 RoleId = 7;
+    string UserId = 8;
+}
+
+message DisableUserRequest{
+    string UserId = 1;
+}
+
+message IsEmailSentResponse{
+    string Response = 1;
+}
+//Feature
+
+message GetFeaturesResponse{
+    repeated Feature Features = 1;
+}
+
+message Feature{
+    int32 Id = 1;
+    string Name = 2;
+    string Description = 3;
+}
+
+//File
+
+message GetFilePathRequest{
+    string Extension = 1;
+}
+
+message GetFilePathResponse{
+    string Path = 2;
+}
+
+//Single trip statistics
+message GetTripStatisticsRequest{
+    int32 CompanyId = 1;
+    int32 TripId = 2;
+    repeated string UserIds = 3;
+    repeated int32 CategoryIds = 4;
+}
+
+message GetTripStatisticsByCategoryResponse{
+    repeated ShortIntItemStatisticsMessage Categories = 1;
+    double Total = 2;
+}
+
+message GetTripStatisticsByUserResponse{
+    repeated ShortUserStatisticsItemMessage Users = 1;
+    double Total = 2;
+}
+
+message GetTripStatisticsTotalBillsResponse{
+    PaginationResponse Pagination = 1;
+    double TotalSpending = 2;
+    repeated BillShortView Bills = 3;
+
+}
+
+message ShortIntItemStatisticsMessage{
+    string ItemName = 1;
+    int32 ItemId = 2;
+    double Value = 3;
+    double PctOfTotal = 4;
+}
+
+message ShortUserStatisticsItemMessage{
+    string Name = 1;
+    string Id = 2;
+    double Sum = 3;
+    double SumInDailyExpenses = 4;
+    double PctOfTotal = 5;
+    double limit = 6;
+}
+
+message GetTripStatisticsTotalBillsRequest{
+    PaginationRequest Pagination = 1;
+    GetTripStatisticsRequest Filters = 2;
+}
+
+message BillShortView{
+    int32 BillId = 1;
+    string Name = 2;
+    string Description = 3;
+    string Category = 4;
+    double Summary = 5;
+    string DateCreated = 6;
+    string CreatorName = 7;
+}
+
+//Total statistics
+message TotalStatisticsFilterRequest{
+    int32 CompanyId = 1;
+    google.protobuf.Timestamp StartDate = 2;
+    google.protobuf.Timestamp EndDate = 3;
+    repeated int32 TripIds = 4;
+    repeated string UserIds = 5;
+    repeated int32 CategoryIds = 6;
+}
+
+message TotalStatisticsInfoResponse{
+    double TotalExpenses = 1;
+    double AvgPerTrip = 2;
+    double AvgPerBill = 3;
+    int32 TotalBills = 4;
+}
+
+message GetTotalExpensesByTripsResponse{
+    repeated ShortIntItemStatisticsMessage Trips = 1;
+    double Total = 2;
+}
