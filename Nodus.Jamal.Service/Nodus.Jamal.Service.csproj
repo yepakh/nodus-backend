@@ -32,6 +32,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Nodus.Database.Context\Nodus.Database.Context.csproj" />
+    <ProjectReference Include="..\Nodus.GlobalSettings\Nodus.GlobalSettings.csproj" />
     <ProjectReference Include="..\Nodus.gRPC.ExceptionHandler\Nodus.gRPC.ExceptionHandler.csproj" />
   </ItemGroup>
 

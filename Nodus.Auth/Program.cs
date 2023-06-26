@@ -2,6 +2,7 @@ using Nodus.Auth.GrpcServices;
 using Nodus.Auth.Services;
 using Nodus.Database.Context.DependencyInjection;
 using Nodus.gRPC.ExceptionHandler;
+using Nodus.GlobalSettings;
 
 namespace Nodus.Auth
 {
@@ -9,12 +10,8 @@ namespace Nodus.Auth
     {
         public static void Main(string[] args)
         {
-            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-
             var config = new ConfigurationBuilder()
-                .AddJsonFile($"appsettings.json", optional: false)
-                .AddJsonFile($"appsettings.{env}.json", optional: true)
-                .AddEnvironmentVariables()
+                .ApplyConfigurationBuilderSettings()
                 .Build();
 
             var builder = WebApplication.CreateBuilder(args);

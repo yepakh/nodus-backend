@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Nodus.TgBot.Options;
+using Nodus.GlobalSettings;
 
 namespace Nodus.TgBot
 {
@@ -8,9 +9,7 @@ namespace Nodus.TgBot
         public Startup()
         {
             var builder = new ConfigurationBuilder()
-                      .SetBasePath(Directory.GetCurrentDirectory())
-                      .AddJsonFile("appsettings.json", optional: false)
-                      .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", optional: true)
+                      .ApplyConfigurationBuilderSettings()
                       .AddEnvironmentVariables();
 
             IConfiguration config = builder.Build();
