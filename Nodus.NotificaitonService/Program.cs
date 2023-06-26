@@ -2,6 +2,7 @@ using Nodus.gRPC.ExceptionHandler;
 using Nodus.NotificaitonService.GrpcServices;
 using Nodus.NotificaitonService.Options;
 using Nodus.NotificaitonService.Services;
+using Nodus.GlobalSettings;
 
 namespace Nodus.NotificaitonService
 {
@@ -11,15 +12,9 @@ namespace Nodus.NotificaitonService
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Additional configuration is required to successfully run gRPC on macOS.
-            // For instructions on how to configure Kestrel and gRPC clients on macOS, visit https://go.microsoft.com/fwlink/?linkid=2099682
-
             // Add services to the container.
-            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var configuration = new ConfigurationBuilder()
-                .AddJsonFile($"appsettings.json", optional: false)
-                .AddJsonFile($"appsettings.{env}.json", optional: true)
-                .AddEnvironmentVariables()
+                .ApplyConfigurationBuilderSettings()
                 .Build();
 
             //add support for Google SMTP

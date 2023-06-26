@@ -7,6 +7,7 @@ using Nodus.Jamal.Service.GrpcServices;
 using Nodus.Jamal.Service.Options;
 using Nodus.Jamal.Service.Services;
 using Nodus.NotificaitonService;
+using Nodus.GlobalSettings;
 
 namespace Nodus.Jamal.Service
 {
@@ -14,11 +15,8 @@ namespace Nodus.Jamal.Service
     {
         public static void Main(string[] args)
         {
-            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var configuration = new ConfigurationBuilder()
-                .AddJsonFile($"appsettings.json", optional: false)
-                .AddJsonFile($"appsettings.{env}.json", optional: true)
-                .AddEnvironmentVariables()
+                .ApplyConfigurationBuilderSettings()
                 .Build();
 
             var builder = WebApplication.CreateBuilder(args);

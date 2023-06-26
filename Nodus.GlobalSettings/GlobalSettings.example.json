@@ -1,0 +1,35 @@
+{
+  "ASPNETCORE_URLS": "http://+:80",
+
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning"
+    }
+  },
+
+  "Kestrel": {
+    "EndpointDefaults": {
+      "Protocols": "Http2"
+    }
+  },
+
+  "ConnectionStrings": {
+    "Grpc": {
+      "JamalService": "http://nodus.jamal.service",
+      "NotificationService": "http://nodus.notificationservice",
+      "MigratorService": "http://nodus.database.migrations.grpc"
+    },
+    "AdminDatabase": ""
+  },
+
+  "Auth": {
+    "AuthApiUrl": "http://nodus.auth"
+  },
+
+  "BotOptions": {
+    "NodusApiURI": "http://localhost:3000"
+  },
+
+  "AllowedHosts": "*"
+}
