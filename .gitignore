@@ -147,6 +147,12 @@ coverage*.json
 coverage*.xml
 coverage*.info
 
+# Ignore all appsettings.json files
+appsettings*.json
+
+# Except appsettings.example.json
+!appsettings.example.json
+
 # Visual Studio code coverage results
 *.coverage
 *.coveragexml
