@@ -7,6 +7,7 @@ using Nodus.Database.Context.DependencyInjection;
 using Nodus.gRPC.ExceptionHandler;
 using Nodus.Jamal.Service.Protos;
 using Nodus.NotificaitonService;
+using Nodus.GlobalSettings;
 
 namespace Nodus.API
 {
@@ -14,11 +15,8 @@ namespace Nodus.API
     {
         public static void Main(string[] args)
         {
-            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var config = new ConfigurationBuilder()
-                .AddJsonFile($"appsettings.json", optional: false)
-                .AddJsonFile($"appsettings.{env}.json", optional: true)
-                .AddEnvironmentVariables()
+                .ApplyConfigurationBuilderSettings()
                 .Build();
 
             var builder = WebApplication.CreateBuilder(args);
