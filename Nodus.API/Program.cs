@@ -27,7 +27,7 @@ namespace Nodus.API
 
             builder.WebHost.UseSentry(o =>
             {
-                o.Dsn = "https://6d6b17d44c3c4583960eacfd3a52e7e4@o4505306994180096.ingest.sentry.io/4505306996277248";
+                o.Dsn = config.GetSection("SentryDSN").Value;
 
                 // When configuring for the first time, to see what the SDK is doing:
                 o.Debug = false;

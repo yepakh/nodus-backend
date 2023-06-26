@@ -22,21 +22,6 @@ namespace Nodus.NotificaitonService
                 .AddEnvironmentVariables()
                 .Build();
 
-            builder.WebHost.UseSentry(o =>
-            {
-                o.Dsn = "https://b554e573bf61479f9248adc24db316e0@o4505306994180096.ingest.sentry.io/4505307290075136";
-
-                // When configuring for the first time, to see what the SDK is doing:
-                o.Debug = false;
-
-                // Set TracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
-                // We recommend adjusting this value in production.
-                o.TracesSampleRate = 1.0;
-
-                // This option will enable Sentry's tracing features. You still need to start transactions and spans.
-                o.EnableTracing = true;
-            });
-
             //add support for Google SMTP
             builder.Services.AddOptions<SmtpOptions>()
                 .Configure<IConfiguration>((settings, configuration) =>

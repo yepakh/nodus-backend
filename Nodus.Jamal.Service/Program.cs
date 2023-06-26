@@ -25,7 +25,7 @@ namespace Nodus.Jamal.Service
 
             builder.WebHost.UseSentry(o =>
             {
-                o.Dsn = "https://69c9a15eb9a54c51b2d80d74f5b96bd2@o4505306994180096.ingest.sentry.io/4505307285291008";
+                o.Dsn = configuration.GetSection("SentryDSN").Value;
 
                 // When configuring for the first time, to see what the SDK is doing:
                 o.Debug = false;
