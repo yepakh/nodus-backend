@@ -149,6 +149,7 @@ coverage*.info
 
 # Ignore all appsettings.json files
 appsettings*.json
+docker.env
 
 # Except appsettings.example.json
 !appsettings.example.json

@@ -17,7 +17,8 @@ namespace Nodus.NotificaitonService
             // Add services to the container.
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var configuration = new ConfigurationBuilder()
-                .AddJsonFile($"appsettings.{env}.json", optional: false)
+                .AddJsonFile($"appsettings.json", optional: false)
+                .AddJsonFile($"appsettings.{env}.json", optional: true)
                 .AddEnvironmentVariables()
                 .Build();
 

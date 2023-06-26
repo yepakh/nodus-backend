@@ -90,13 +90,13 @@ namespace Nodus.Jamal.Service
             services.AddScoped<MigratorGrpcClient>();
             services.AddGrpcClient<Migrator.MigratorClient>(options =>
             {
-                options.Address = new Uri(configuration["ConnectionStrings:MigratorService"]);
+                options.Address = new Uri(configuration["ConnectionStrings:Grpc:MigratorService"]);
             });
 
             services.AddScoped<NotificatorGrpcClient>();
             services.AddGrpcClient<Notificator.NotificatorClient>(options =>
             {
-                options.Address = new Uri(configuration["ConnectionStrings:NotificationService"]);
+                options.Address = new Uri(configuration["ConnectionStrings:Grpc:NotificationService"]);
             });
 
             //add other services

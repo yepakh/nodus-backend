@@ -12,7 +12,8 @@ namespace Nodus.Auth
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
             var config = new ConfigurationBuilder()
-                .AddJsonFile($"appsettings.{env}.json", optional: false)
+                .AddJsonFile($"appsettings.json", optional: false)
+                .AddJsonFile($"appsettings.{env}.json", optional: true)
                 .AddEnvironmentVariables()
                 .Build();
 

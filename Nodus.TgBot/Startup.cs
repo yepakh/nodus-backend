@@ -1,10 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Nodus.TgBot.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Nodus.TgBot
 {
@@ -21,6 +16,8 @@ namespace Nodus.TgBot
             IConfiguration config = builder.Build();
 
             BotOptions = config.GetSection("BotOptions").Get<BotOptions>();
+            BotOptions.AdminDbConnectionString = config.GetConnectionString("AdminDatabase");
+            BotOptions.AuthServiceURI = config.GetSection("Auth:AuthApiUrl").Value;
         }
 
         public BotOptions BotOptions { get; set; }

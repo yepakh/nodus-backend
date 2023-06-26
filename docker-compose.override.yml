@@ -3,8 +3,7 @@ version: '3.4'
 services:
   nodus.api:
     container_name: nodus.api
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development_Docker
+    env_file: docker.env
     ports:
       - "3000:80"
     volumes:
@@ -13,8 +12,7 @@ services:
 
   nodus.jamal.service:
     container_name: nodus.jamal.service
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development_Docker
+    env_file: docker.env
     ports:
       - "3001:80"
     volumes:
@@ -23,9 +21,7 @@ services:
 
   nodus.auth:
     container_name: nodus.auth
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:80
+    env_file: docker.env
     ports:
       - "3002:80"
     volumes:
@@ -43,8 +39,7 @@ services:
 
   nodus.database.migrations.webapi:
     container_name: nodus.database.migrations.webapi
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+    env_file: docker.env
     ports:
       - "5001:80"
     volumes:
@@ -53,9 +48,7 @@ services:
 
   nodus.database.migrations.grpc:
     container_name: nodus.database.migrations.grpc
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:80
+    env_file: docker.env
     ports:
       - "5002:80"
     volumes:
@@ -64,9 +57,7 @@ services:
 
   nodus.notificationservice:
     container_name: nodus.notificationservice
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=;http://+:80
+    env_file: docker.env
     ports:
       - "3003:80"
     volumes:
@@ -75,9 +66,7 @@ services:
   
   nodus.tgbot:
     container_name: nodus.tgbot
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development_Docker
-      - BOTOPTIONS_ADMINDBCONNECTIONSTRING=Data Source=nodus.sqlserver;Initial Catalog=AdminDB;User ID=sa;Password=Qwerty1!
+    env_file: docker.env
     ports:
       - "4000:80"
     volumes:

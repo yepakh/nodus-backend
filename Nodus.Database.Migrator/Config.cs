@@ -8,10 +8,11 @@ namespace Nodus.Database.Migrator
 
         public Config()
         {
-            var directory = Directory.GetCurrentDirectory();
+            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
             this.config = new ConfigurationBuilder()
-             .SetBasePath(directory)
              .AddJsonFile("appsettings.json", false, true)
+             .AddJsonFile($"appsettings.{env}.json", optional: true)
              .AddEnvironmentVariables()
              .Build();
         }

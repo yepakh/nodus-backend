@@ -10,6 +10,8 @@
     <DockerComposeProjectName>nodus</DockerComposeProjectName>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="docker.example.env" />
+    <None Include="docker.env" />
     <None Include="docker-compose.override.yml">
       <DependentUpon>docker-compose.yml</DependentUpon>
     </None>
