@@ -1,6 +1,4 @@
 using AutoMapper;
-using Google.Protobuf.WellKnownTypes;
-using Microsoft.Extensions.Options;
 using Nodus.API.ConfigureServices;
 using Nodus.API.JsonConverters;
 using Nodus.API.Mapping;

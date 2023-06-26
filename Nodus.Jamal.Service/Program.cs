@@ -1,5 +1,5 @@
-using Microsoft.EntityFrameworkCore;
 using Nodus.Database.Context;
+using Nodus.Database.Context.DependencyInjection;
 using Nodus.Database.Migrations.gRPC;
 using Nodus.gRPC.ExceptionHandler;
 using Nodus.Jamal.Service.GrpcClients;
@@ -7,7 +7,6 @@ using Nodus.Jamal.Service.GrpcServices;
 using Nodus.Jamal.Service.Options;
 using Nodus.Jamal.Service.Services;
 using Nodus.NotificaitonService;
-using Nodus.Database.Context.DependencyInjection;
 
 namespace Nodus.Jamal.Service
 {
@@ -17,7 +16,8 @@ namespace Nodus.Jamal.Service
         {
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var configuration = new ConfigurationBuilder()
-                .AddJsonFile($"appsettings.{env}.json", optional: false)
+                .AddJsonFile($"appsettings.json", optional: false)
+                .AddJsonFile($"appsettings.{env}.json", optional: true)
                 .AddEnvironmentVariables()
                 .Build();
 
