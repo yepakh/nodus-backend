@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Nodus.TgBot": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

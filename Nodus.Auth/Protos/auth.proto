@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+option csharp_namespace = "Nodus.Auth";
+
+package auth;
+
+service Auth {
+	rpc ValidateToken (Token) returns (ValidationResponse);
+	rpc GetUserProfile (UserId) returns (UserModelResponse);
+	rpc GetConnectionString (UserId) returns (ConnectionStringResponse);
+	rpc GenerateToken (UserId) returns (Token);
+	rpc ValidateUserFeatures (ValidateUserTokenRequest) returns (ValidationResponse);
+	rpc GetClaims(Token) returns (ClaimsReponse);
+	rpc SetPassword(SetPasswordRequest) returns (ValidationResponse);
+	rpc LoginUser(LoginUserRequest) returns (Token);
+	rpc CheckLinkIsValid (CheckLinkIsValidRequest) returns (ValidationResponse);
+	rpc LoginByChatId (LoginByChatIdRequest) returns (Token);
+}
+
+message LoginByChatIdRequest{
+	int64 chatId = 1;
+}
+
+message CheckLinkIsValidRequest{
+    string userId = 1;
+    string linkId = 2;
+}
+
+message LoginUserRequest{
+	string email = 1;
+	string password = 2;
+}
+
+message SetPasswordRequest{
+	string userId = 1;
+	string password = 2;
+	string linkId = 3;
+}
+
+message ClaimsReponse{
+	repeated ClaimMessage claims = 1;
+}
+
+message ValidateUserTokenRequest{
+	string token = 1;
+	string featureName = 2;
+}
+
+message ClaimMessage{
+	string name = 1;
+	string value = 2;
+}
+
+message Token {
+	string token = 1;
+}
+
+message UserId{
+	string userId = 1;
+}
+
+message ValidationResponse{
+	bool isValidated = 1; 
+}
+
+message UserModelResponse {
+	string role = 1;
+	string email = 2;
+	string connectionString = 3;
+	string userId = 4;
+	int32 roleId = 5;
+	int32 companyId = 6;
+}
+
+message ConnectionStringResponse{
+	string connectionString = 1;
+}

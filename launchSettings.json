@@ -1,0 +1,17 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "nodus.api": "StartDebugging",
+        "nodus.auth": "StartDebugging",
+        "nodus.database.migrations.grpc": "StartDebugging",
+        "nodus.database.migrations.webapi": "StartDebugging",
+        "nodus.jamal.service": "StartDebugging",
+        "nodus.notificationservice": "StartDebugging",
+        "nodus.tgbot": "StartDebugging"
+      }
+    }
+  }
+}

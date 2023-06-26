@@ -1,0 +1,51 @@
+version: '3.4'
+
+services:
+  nodus.api:
+    image: ${DOCKER_REGISTRY-}nodusapi
+    build:
+      context: .
+      dockerfile: Nodus.API/Dockerfile
+
+  nodus.jamal.service:
+    image: ${DOCKER_REGISTRY-}nodusjamalservice
+    build:
+      context: .
+      dockerfile: Nodus.Jamal.Service/Dockerfile
+
+  nodus.auth:
+    image: ${DOCKER_REGISTRY-}nodusauth
+    build:
+      context: .
+      dockerfile: Nodus.Auth/Dockerfile
+
+  nodus.sqlserver:
+    image: "mcr.microsoft.com/mssql/server"
+
+  nodus.database.migrations.webapi:
+    image: ${DOCKER_REGISTRY-}nodusdatabasemigrationswebapi
+    build:
+      context: .
+      dockerfile: Nodus.Database.Migrations.WebAPI/Dockerfile
+
+
+  nodus.database.migrations.grpc:
+    image: ${DOCKER_REGISTRY-}nodusdatabasemigrationsgrpc
+    build:
+      context: .
+      dockerfile: Nodus.Database.Migrations.gRPC/Dockerfile
+
+
+  nodus.notificationservice:
+    image: ${DOCKER_REGISTRY-}nodusnotificationservice
+    build:
+      context: .
+      dockerfile: Nodus.NotificaitonService/Dockerfile
+
+
+  nodus.tgbot:
+    image: ${DOCKER_REGISTRY-}nodustgbot
+    build:
+      context: .
+      dockerfile: Nodus.TgBot/Dockerfile
+

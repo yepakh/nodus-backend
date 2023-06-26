@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option csharp_namespace = "Nodus.Database.Migrations.gRPC";
+
+service Migrator {
+  rpc MigrateAdmin (EmptyRequest) returns (SuccessReply);
+  rpc MigrateAllClients (EmptyRequest) returns (SuccessReply);
+  rpc MigrateOneClient(MigrateCompanyRequest) returns (SuccessReply);
+  rpc MigrateAll (EmptyRequest) returns (SuccessReply);
+}
+
+message MigrateCompanyRequest {
+  int32 companyId = 1;
+}
+
+message SuccessReply {
+  string errorMessage = 1;
+}
+
+message EmptyRequest {
+
+}
