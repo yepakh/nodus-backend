@@ -74,17 +74,9 @@ docker compose -f ./docker-compose.yml -f ./docker-compose.override.yml build
 docker compose -f ./docker-compose.yml -f ./docker-compose.override.yml up
 ```
 
-The first command 
-```bash
-docker compose -f ./docker-compose.yml -f ./docker-compose.override.yml build
-```
- builds the Docker images for the services based on the provided configuration files.
+The first command  builds the Docker images for the services based on the provided configuration files.
 
-The second command 
-```bash
-docker compose -f ./docker-compose.yml -f ./docker-compose.override.yml up
-```
-starts the containers and runs the backend services.
+The second command starts the containers and runs the backend services.
 
 Ensure that you have Docker installed and properly configured before running these commands.
 
