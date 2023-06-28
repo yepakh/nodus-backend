@@ -5,5 +5,6 @@
         public string AuthApiUrl { get; set; }
         public string Domain { get; set; }
         public string Cors { get; set; }
+        public string PublicKey { get; set; }
     }
 }

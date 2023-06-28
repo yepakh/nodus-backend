@@ -15,15 +15,13 @@ namespace Nodus.Jamal.Service
     {
         public static void Main(string[] args)
         {
-            var configuration = new ConfigurationBuilder()
-                .ApplyConfigurationBuilderSettings()
-                .Build();
-
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Configuration.ApplyConfigurationBuilderSettings();
 
             builder.WebHost.UseSentry(o =>
             {
-                o.Dsn = configuration.GetSection("SentryDSN").Value;
+                o.Dsn = builder.Configuration.GetSection("SentryDSN").Value;
 
                 // When configuring for the first time, to see what the SDK is doing:
                 o.Debug = false;
@@ -45,7 +43,7 @@ namespace Nodus.Jamal.Service
             });
 
             // Add services to the container.
-            CongifureServices(builder.Services, configuration);
+            CongifureServices(builder.Services, builder.Configuration);
 
             var app = builder.Build();
 
