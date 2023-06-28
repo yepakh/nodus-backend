@@ -39,7 +39,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nodus.TgBot", "Nodus.TgBot\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nodus.API.ViewModels", "Nodus.API.ViewModels\Nodus.API.ViewModels.csproj", "{0DE8B5A4-95D5-47A8-AE49-5FD8608B81E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nodus.GlobalSettings", "Nodus.GlobalSettings\Nodus.GlobalSettings.csproj", "{60891FD9-A7E1-471F-9F3F-1E27F93181C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nodus.GlobalSettings", "Nodus.GlobalSettings\Nodus.GlobalSettings.csproj", "{60891FD9-A7E1-471F-9F3F-1E27F93181C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nodus.Converters", "Nodus.Converters\Nodus.Converters.csproj", "{A2CAE855-DC12-43EF-BEBF-50F5917D3682}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,6 +113,10 @@ Global
 		{60891FD9-A7E1-471F-9F3F-1E27F93181C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60891FD9-A7E1-471F-9F3F-1E27F93181C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60891FD9-A7E1-471F-9F3F-1E27F93181C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2CAE855-DC12-43EF-BEBF-50F5917D3682}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2CAE855-DC12-43EF-BEBF-50F5917D3682}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2CAE855-DC12-43EF-BEBF-50F5917D3682}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2CAE855-DC12-43EF-BEBF-50F5917D3682}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -126,6 +132,7 @@ Global
 		{1CDEEAD2-3F87-4E38-88F5-99D38C05E10D} = {8F32123F-ECE2-4A1F-9594-218AAA3DB161}
 		{0DE8B5A4-95D5-47A8-AE49-5FD8608B81E5} = {8F32123F-ECE2-4A1F-9594-218AAA3DB161}
 		{60891FD9-A7E1-471F-9F3F-1E27F93181C3} = {8F32123F-ECE2-4A1F-9594-218AAA3DB161}
+		{A2CAE855-DC12-43EF-BEBF-50F5917D3682} = {8F32123F-ECE2-4A1F-9594-218AAA3DB161}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {98A200C2-204B-48E1-B8B6-4F4C3BA9D784}

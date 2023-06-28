@@ -1,6 +1,5 @@
 using AutoMapper;
 using Nodus.API.ConfigureServices;
-using Nodus.API.JsonConverters;
 using Nodus.API.Mapping;
 using Nodus.Auth.Handler;
 using Nodus.Database.Context.DependencyInjection;
@@ -8,6 +7,7 @@ using Nodus.gRPC.ExceptionHandler;
 using Nodus.Jamal.Service.Protos;
 using Nodus.NotificaitonService;
 using Nodus.GlobalSettings;
+using Nodus.Converters.JsonTypeConverters;
 
 namespace Nodus.API
 {

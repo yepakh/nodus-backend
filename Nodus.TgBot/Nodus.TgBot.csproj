@@ -30,6 +30,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Nodus.API.ViewModels\Nodus.API.ViewModels.csproj" />
     <ProjectReference Include="..\Nodus.Auth.Handler\Nodus.Auth.Handler.csproj" />
+    <ProjectReference Include="..\Nodus.Converters\Nodus.Converters.csproj" />
     <ProjectReference Include="..\Nodus.Database.Context\Nodus.Database.Context.csproj" />
     <ProjectReference Include="..\Nodus.GlobalSettings\Nodus.GlobalSettings.csproj" />
   </ItemGroup>

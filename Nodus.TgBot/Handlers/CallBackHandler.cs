@@ -3,10 +3,11 @@ using Nodus.API.Models.Bill;
 using Nodus.API.Models.BillCategory;
 using Nodus.API.Models.Trip;
 using Nodus.API.Models.Wrappers;
+using Nodus.Converters.JsonTypeConverters;
 using Nodus.Database.Context;
 using Nodus.Database.Models.Admin;
 using Nodus.Database.Models.Admin.Enums;
-using Nodus.TgBot.Converters;
+using Nodus.Converters.Deserializers;
 using Nodus.TgBot.Models;
 using Nodus.TgBot.Options;
 using System.Net.Http.Headers;
@@ -499,12 +500,7 @@ namespace Nodus.TgBot.Handlers
                 throw new Exception("Null response from API");
             }
 
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true,
-                MaxDepth = 64,
-            };
-            options.Converters.Add(new DateTimeConverter());
+            var options = new JsonSerializerOptions().ConfigureJsonSerializerOptions();
 
             PagedResponse<List<BillViewModel>> serializedResponse = JsonSerializer.Deserialize<PagedResponse<List<BillViewModel>>>(content, options);
 
@@ -535,12 +531,7 @@ namespace Nodus.TgBot.Handlers
                 throw new Exception("Null response from API");
             }
 
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true,
-                MaxDepth = 64,
-            };
-            options.Converters.Add(new DateTimeConverter());
+            var options = new JsonSerializerOptions().ConfigureJsonSerializerOptions();
 
             Response<TripViewModel> serializedResponse = JsonSerializer.Deserialize<Response<TripViewModel>>(content, options);
 
@@ -569,12 +560,7 @@ namespace Nodus.TgBot.Handlers
                 throw new Exception("Null response from API");
             }
 
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true,
-                MaxDepth = 64,
-            };
-            options.Converters.Add(new DateTimeConverter());
+            var options = new JsonSerializerOptions().ConfigureJsonSerializerOptions();
 
             Response<BillViewModel> serializedResponse = JsonSerializer.Deserialize<Response<BillViewModel>>(content, options);
 
@@ -603,12 +589,7 @@ namespace Nodus.TgBot.Handlers
                 throw new Exception("Null response from API");
             }
 
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true,
-                MaxDepth = 64,
-            };
-            options.Converters.Add(new DateTimeConverter());
+            var options = new JsonSerializerOptions().ConfigureJsonSerializerOptions();
 
             PagedResponse<List<BillCategoryViewModel>> serializedResponse = JsonSerializer.Deserialize<PagedResponse<List<BillCategoryViewModel>>>(content, options);
 

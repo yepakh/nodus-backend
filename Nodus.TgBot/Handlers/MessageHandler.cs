@@ -4,7 +4,7 @@ using Nodus.API.Models.Wrappers;
 using Nodus.Database.Context;
 using Nodus.Database.Models.Admin;
 using Nodus.Database.Models.Admin.Enums;
-using Nodus.TgBot.Converters;
+using Nodus.Converters.Deserializers;
 using Nodus.TgBot.Engine;
 using Nodus.TgBot.Options;
 using System.Net.Http.Headers;
@@ -224,12 +224,7 @@ namespace Nodus.TgBot.Handlers
                 throw new Exception("Null response from API");
             }
 
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true,
-                MaxDepth = 64,
-            };
-            options.Converters.Add(new DateTimeConverter());
+            var options = new JsonSerializerOptions().ConfigureJsonSerializerOptions();
 
             PagedResponse<List<TripViewModel>> serializedResponse = JsonSerializer.Deserialize<PagedResponse<List<TripViewModel>>>(content, options);
 
