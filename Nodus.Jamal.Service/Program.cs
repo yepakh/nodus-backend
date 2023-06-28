@@ -82,7 +82,6 @@ namespace Nodus.Jamal.Service
 
             //add database services
             services.AddEFContextsServices(configuration);
-            services.AddSingleton<EFContextFactory>();
 
             //add grpc clients
             services.AddScoped<MigratorGrpcClient>();

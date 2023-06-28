@@ -1,6 +1,8 @@
 ﻿using Grpc.Core;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
@@ -12,10 +14,12 @@ namespace Nodus.Auth.Handler
     internal class AuthModel
     {
         private readonly Auth.AuthClient _authClient;
+        private readonly RsaSecurityKey _rsaSecurityKey;
 
-        public AuthModel(Auth.AuthClient authClient)
+        public AuthModel(Auth.AuthClient authClient, RsaSecurityKey rsaSecurityKey)
         {
             _authClient = authClient;
+            _rsaSecurityKey = rsaSecurityKey;
         }
 
         public bool IsValid { get; private set; } = false;
@@ -49,6 +53,31 @@ namespace Nodus.Auth.Handler
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        public bool ValidateJwtToken(string token)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            SecurityToken validatedToken;
+
+            try
+            {
+                tokenHandler.ValidateToken(token, new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = _rsaSecurityKey,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
+                }, out validatedToken);
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+            return validatedToken != null;
         }
     }
 }

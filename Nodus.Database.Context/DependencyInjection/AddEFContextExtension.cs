@@ -8,15 +8,17 @@ namespace Nodus.Database.Context.DependencyInjection
     {
         public static IServiceCollection AddEFContextsServices(this IServiceCollection services, IConfiguration configuration)
         {
+            var adminConnString = configuration["ConnectionStrings:AdminDatabase"];
+
             services.AddOptions<AdminConnectionStringOptions>()
                 .Configure<IConfiguration>((settings, configuration) =>
                 {
-                    configuration.GetSection("ConnectionStrings").Bind(settings);
+                    settings.AdminDatabase = adminConnString;
                 });
 
             services.AddDbContext<AdminContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("AdminDatabase"));
+                options.UseSqlServer(adminConnString);
             });
 
             services.AddSingleton<EFContextFactory>();

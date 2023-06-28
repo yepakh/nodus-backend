@@ -24,7 +24,8 @@
   },
 
   "Auth": {
-    "AuthApiUrl": "http://nodus.auth"
+    "AuthApiUrl": "http://nodus.auth",
+    "PublicKey": ""
   },
 
   "BotOptions": {

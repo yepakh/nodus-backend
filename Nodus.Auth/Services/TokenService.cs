@@ -2,6 +2,7 @@
 using Nodus.Database.Models.Admin;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Nodus.Auth.Services
@@ -9,10 +10,12 @@ namespace Nodus.Auth.Services
     internal class TokenService
     {
         private readonly IConfiguration _configuration;
+        private readonly RsaSecurityKey _rsaSecurityKey;
 
-        public TokenService(IConfiguration configuration)
+        public TokenService(IConfiguration configuration, RsaSecurityKey rsaSecurityKey)
         {
             _configuration = configuration;
+            _rsaSecurityKey = rsaSecurityKey;
         }
 
         public string GenerateJwtToken(User user)
@@ -20,8 +23,15 @@ namespace Nodus.Auth.Services
             string validIssuer = _configuration.GetSection("Auth:Issuer").Value;
             string validAudience = _configuration.GetSection("Auth:Audience").Value;
 
-            string secret = _configuration.GetSection("Auth:Secret").Value;
-            var key = Encoding.ASCII.GetBytes(secret);
+            string secret = _configuration.GetSection("Auth:PrivateKey").Value;
+
+            RSA rsa = RSA.Create();
+            rsa.ImportRSAPrivateKey(Convert.FromBase64String(secret), out int bytesRead);
+
+            var signingCredentials = new SigningCredentials(
+                key: new RsaSecurityKey(rsa),
+                algorithm: SecurityAlgorithms.RsaSha256
+            );
 
             string lifetime = _configuration.GetSection("Auth:LifeTimeHours").Value;
 
@@ -30,7 +40,7 @@ namespace Nodus.Auth.Services
                 Issuer = validIssuer,
                 Audience = validAudience,
                 Expires = DateTime.UtcNow.AddHours(int.Parse(lifetime)),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
+                SigningCredentials = signingCredentials,
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
@@ -48,8 +58,7 @@ namespace Nodus.Auth.Services
         public bool ValidateJwtToken(string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            string secret = _configuration.GetSection("Auth:Secret").Value;
-            var key = Encoding.ASCII.GetBytes(secret);
+
             SecurityToken validatedToken;
 
             try
@@ -57,7 +66,7 @@ namespace Nodus.Auth.Services
                 tokenHandler.ValidateToken(token, new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    IssuerSigningKey = _rsaSecurityKey,
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     ClockSkew = TimeSpan.Zero

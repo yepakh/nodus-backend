@@ -49,6 +49,12 @@ namespace Nodus.Auth.Handler
                     }
                 }
 
+                bool validationResult = _authModel.ValidateJwtToken(token);
+                if (!validationResult)
+                {
+                    return AuthenticateResult.Fail("Invalid token");
+                }
+
                 // generate AuthenticationTicket from the Identity
                 // and current authentication scheme
                 var ticket = new AuthenticationTicket(new ClaimsPrincipal(await _authModel.GenerateIdentity(token)), this.Scheme.Name);
