@@ -1,6 +1,7 @@
 # Nodus Backend Repository
 
-This repository contains the backend codebase for a web application designed to store bills from work trips. It includes various projects and microservices that handle different aspects of the application.
+This repository contains the backend codebase for a web application designed to store bills from work trips. The project was developed as part of qualification confirmation for my diploma. Now i want to work on upgrading and implementing things that were not done due to lack of time.
+It includes various projects and microservices that handle different aspects of the application.
 
 ## Projects Overview
 
@@ -12,6 +13,10 @@ This repository contains the backend codebase for a web application designed to 
 
 - Description: The main gRPC microservice containing all the business logic.
 
+### Nodus.Auth
+
+- Description: A gRPC microservice responsible for user authorization and authentication.
+
 ### Nodus.Auth.Handler
 
 - Description: A library used to integrate the authentication microservice into the middleware of other services.
@@ -19,10 +24,6 @@ This repository contains the backend codebase for a web application designed to 
 ### Nodus.NotificationService
 
 - Description: A gRPC microservice used for sending emails.
-
-### Nodus.Auth
-
-- Description: A gRPC microservice responsible for user authorization and authentication.
 
 ### Nodus.Database.Models
 
