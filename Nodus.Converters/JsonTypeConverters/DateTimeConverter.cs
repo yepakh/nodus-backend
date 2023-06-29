@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Diagnostics;
 
-namespace Nodus.TgBot.Converters
+namespace Nodus.Converters.JsonTypeConverters
 {
     public class DateTimeConverter : JsonConverter<DateTime>
     {
@@ -14,7 +14,7 @@ namespace Nodus.TgBot.Converters
 
         public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
         {
-            writer.WriteStringValue(value.ToString());
+            writer.WriteStringValue(value.ToString("dd/MM/yyyy HH:mm:ss"));
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using System;
 
 namespace Nodus.Database.Context.DependencyInjection
 {
@@ -16,7 +18,11 @@ namespace Nodus.Database.Context.DependencyInjection
 
             services.AddDbContext<AdminContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("AdminDatabase"));
+                using (var serviceProvider = services.BuildServiceProvider())
+                {
+                    var adminConnectionStringOptions = serviceProvider.GetRequiredService<IOptions<AdminConnectionStringOptions>>().Value;
+                    options.UseSqlServer(adminConnectionStringOptions.AdminDatabase);
+                }
             });
 
             services.AddSingleton<EFContextFactory>();

@@ -13,9 +13,7 @@ namespace Nodus.NotificaitonService
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            var configuration = new ConfigurationBuilder()
-                .ApplyConfigurationBuilderSettings()
-                .Build();
+            builder.Configuration.ApplyConfigurationBuilderSettings();
 
             //add support for Google SMTP
             builder.Services.AddOptions<SmtpOptions>()

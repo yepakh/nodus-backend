@@ -30,6 +30,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Nodus.API.ViewModels\Nodus.API.ViewModels.csproj" />
     <ProjectReference Include="..\Nodus.Auth.Handler\Nodus.Auth.Handler.csproj" />
+    <ProjectReference Include="..\Nodus.Converters\Nodus.Converters.csproj" />
     <ProjectReference Include="..\Nodus.Database.Context\Nodus.Database.Context.csproj" />
     <ProjectReference Include="..\Nodus.GlobalSettings\Nodus.GlobalSettings.csproj" />
   </ItemGroup>
@@ -38,6 +39,24 @@
     <Protobuf Include="..\Nodus.Auth\Protos\auth.proto" GrpcServices="Client">
       <Link>Protos\auth.proto</Link>
     </Protobuf>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.Development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Optional>true</Optional>
+    </None>
+    <None Update="appsettings.Development_Docker.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Optional>true</Optional>
+    </None>
+    <None Update="appsettings.example.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Optional>true</Optional>
+    </None>
   </ItemGroup>
 
 </Project>

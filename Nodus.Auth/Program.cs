@@ -3,6 +3,8 @@ using Nodus.Auth.Services;
 using Nodus.Database.Context.DependencyInjection;
 using Nodus.gRPC.ExceptionHandler;
 using Nodus.GlobalSettings;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Cryptography;
 
 namespace Nodus.Auth
 {
@@ -10,15 +12,13 @@ namespace Nodus.Auth
     {
         public static void Main(string[] args)
         {
-            var config = new ConfigurationBuilder()
-                .ApplyConfigurationBuilderSettings()
-                .Build();
-
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Configuration.ApplyConfigurationBuilderSettings();
 
             builder.WebHost.UseSentry(o =>
             {
-                o.Dsn = config.GetSection("SentryDSN").Value;
+                o.Dsn = builder.Configuration.GetSection("SentryDSN").Value;
 
                 // When configuring for the first time, to see what the SDK is doing:
                 o.Debug = false;
@@ -32,7 +32,7 @@ namespace Nodus.Auth
             });
 
             // Add services to the container.
-            ConfigureServices(builder, config);
+            ConfigureServices(builder, builder.Configuration);
 
             WebApplication app = ConfigurePipeline(builder);
 
@@ -52,6 +52,19 @@ namespace Nodus.Auth
             services.AddGrpc(options =>
             {
                 options.Interceptors.Add<ExceptionInterceptor>();
+            });
+
+            services.AddSingleton<RsaSecurityKey>(provider => {
+                // It's required to register the RSA key with depedency injection.
+                // If you don't do this, the RSA instance will be prematurely disposed.
+
+                RSA rsa = RSA.Create();
+                rsa.ImportRSAPublicKey(
+                    source: Convert.FromBase64String(configuration["Auth:PublicKey"]),
+                    bytesRead: out int _
+                );
+
+                return new RsaSecurityKey(rsa);
             });
         }
 
